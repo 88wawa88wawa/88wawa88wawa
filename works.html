@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>制作実績 | イラスト・Live2Dのご依頼</title>
+<meta name="description" content="これまでの制作実績の一覧です。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="logo" href="index.html" data-sitename>SITE NAME</a>
+    <ul>
+      <li><a href="works.html" aria-current="page">作品</a></li>
+      <li><a href="index.html#price">料金</a></li>
+      <li><a href="index.html#contact">お問い合わせ</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">WORKS</span>
+      <h1>制作実績</h1>
+      <p class="lead">これまでのお仕事や作品の一覧です。画像を押すと大きく見られます。</p>
+    </div>
+  </div>
+
+  <!-- YouTube（実績ページの上）。使うときは、この枠のコメント記号（最初の行の先頭と、最後の行）を消します
+  <section class="yt-sec" style="padding-top:8px;padding-bottom:0">
+    <div class="wrap"><div class="card yt" data-youtube></div></div>
+  </section>
+  -->
+
+  <section style="padding-top:8px">
+    <div class="wrap">
+      <div class="filters" id="filters" role="group" aria-label="作品の絞り込み"></div>
+      <div class="grid" id="worksGrid"></div>
+      <div class="more"><a class="btn pink" href="index.html#price">料金をシミュレーション</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="flinks"><a href="index.html">トップ</a><button type="button" class="linkbtn" data-open="notesDialog" aria-haspopup="dialog">ご依頼についての注意事項</button><a href="index.html#contact">お問い合わせ</a></p>
+    <small>&copy; <span data-sitename>SITE NAME</span></small>
+  </div>
+</footer>
+
+<dialog id="notesDialog" class="notes-dialog" aria-labelledby="notesTitle">
+  <div class="nd-head">
+    <h2 id="notesTitle">ご依頼についての注意事項</h2>
+    <button type="button" class="btn white nd-close" data-close>閉じる</button>
+  </div>
+  <div class="nd-body">
+    
+    <div class="card note-card" style="margin-top:0">
+        <h2>ご依頼の流れ</h2>
+        <ol>
+          <li>【お問い合わせ】フォーム、メール、X（旧Twitter）のいずれかでご連絡ください。</li>
+          <li>【確認】ご希望の内容を確認して、正式なお見積もり、納期をご案内します。</li>
+          <li>【お支払い】原則先払い、銀行振込です。その他の方法や分割等も内容により対応可能。お気軽にご相談ください。</li>
+          <li>【制作開始】入金確認後制作を開始いたします。</li>
+          <li>【ラフ】ラフをご確認いただき、修正があればお伝えください。</li>
+          <li>【清書】清書をご確認いただき、修正があれば修正し、納品。</li>
+        </ol>
+      </div>
+
+      <div class="card note-card">
+        <h2>料金について</h2>
+        <ul>
+          <li>表示している金額は、すべて税込です。</li>
+          <li>すべて商用利用込みの料金です。</li>
+          <li>かんたん見積もりは概算です。正式なお見積もりは内容確認後改めてご案内します。</li>
+          <li>「〜」が付いている項目は最低金額です。内容によって変わります。</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>納期について</h2>
+        <ul>
+          <li>通常の納期：内容によりますが、ご依頼から納品まで通常1か月程頂いております。</li>
+          <li>現在の受付状況は、トップページの「<a href="index.html#schedule">現在のスケジュール</a>」をご覧ください。</li>
+          <li>短納期オプションはスケジュールによってはお受けできない場合があります。お急ぎの場合はあらかじめお伝えください。</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>修正について</h2>
+        <ul>
+          <li>無料の修正は、ラフの段階で2回までです。</li>
+          <li>3回目以降は、500円〜の追加料金をいただきます。内容によって金額は異なります。</li>
+          <li>完成後の修正は、軽微なもので1回のみ無料です。大幅な変更や2回目以降の修正は、同じく500円〜の追加料金をいただきます。</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>利用範囲・著作権について</h2>
+        <ul>
+          <li>商用利用に含まれる範囲：収益化している活動での使用、将来的な収益化を目指す活動での使用、グッズの販売を含みます。</li>
+          <li>法人でのご利用：個人の方と同じ料金・範囲です。商用利用の範囲以外での使用用途をご希望の場合は事前にご相談ください（別料金となる場合があります）</li>
+          <li>著作権の扱い：著作権は譲渡しません。著作権の譲渡をご希望の場合は、別途ご相談ください（別料金となります）</li>
+          <li>禁止事項：イラストの二次配布、自作発言、AIへの学習・読み込みはお断りしています。</li>
+          <li>実績掲載：完成したイラストは制作実績としてこのサイトやSNSに掲載することがあります。掲載を控えたい場合は追加オプションとなります（5,000円）</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>キャンセル・返金について</h2>
+        <ul>
+          <li>制作が始まってからのキャンセルは、<strong class="em-u">原則お受けしていません。</strong></li>
+          <li>もしご希望される場合は、ラフ提出前→全額返金、ラフ提出後以降→返金不可・進行度合いによってはキャンセル料をいただくことがあります。</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>お預かりする情報について</h2>
+        <ul>
+          <li>お問い合わせでお預かりする個人情報・ご相談内容は、ご連絡と制作以外の用途で一切使用致しません。</li>
+          <li>お問い合わせフォームの内容は、外部のフォーム受付サービスを通して受け取っています。</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>お受けできないご依頼</h2>
+        <ul>
+          <li>政治、宗教に関するご依頼</li>
+          <li>公式のガイドラインで、有償でのご依頼が認められていない二次創作</li>
+          <li>他者を攻撃する内容のご依頼</li>
+          <li>判断に迷うご依頼は、事前にご相談ください。</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>Live2Dについて</h2>
+        <ul>
+          <li>準備中です。YoutubeやXに進捗をアップしていきますのでよければご確認ください！</li>
+        </ul>
+      </div>
+    <div class="more"><button type="button" class="btn pink" data-close>閉じて戻る</button></div>
+  </div>
+</dialog>
+
+<dialog id="lightbox" class="lb" aria-label="拡大表示">
+  <div class="lb-media" id="lbMedia"></div>
+  <div class="lb-info">
+    <p class="lb-title" id="lbTitle"></p>
+    <span class="tag" id="lbTag"></span>
+    <p class="lb-desc" id="lbDesc"></p>
+    <div class="lb-actions" id="lbActions"></div>
+  </div>
+  <button class="btn" type="button" id="lightboxClose">閉じる</button>
+</dialog>
+
+<noscript><p style="text-align:center;padding:24px">作品を表示するには、JavaScriptを有効にしてください。</p></noscript>
+
+<script src="config.js"></script>
+<script src="common.js"></script>
+</body>
+</html>

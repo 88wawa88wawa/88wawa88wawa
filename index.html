@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SITE NAME | イラスト・Live2Dのご依頼</title>
+<meta name="description" content="イラスト・Live2Dのご依頼ページ。実績の紹介、料金の概算見積もり、お問い合わせができます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="logo" href="#top" data-sitename>SITE NAME</a>
+    <ul>
+      <li><a href="works.html">作品</a></li>
+      <li><a href="#price">料金</a></li>
+      <li><a href="#contact">お問い合わせ</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="hero" id="hero">
+    <div class="hero-media" id="heroMedia" aria-hidden="true"></div>
+    <div class="hero-dim"></div>
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+    <div class="wrap">
+      <span class="badge">COMMISSION OPEN</span>
+      <h1>イラスト・Live2Dの<br><mark>ご依頼</mark>はこちら</h1>
+      <p>オリジナルキャラクターの立ち絵から、Live2Dのご相談まで。料金は下のページで、その場で概算を出せます。</p>
+      <div class="hero-camp" id="heroCamp" hidden><a class="camp-pill" href="#price" id="heroCampLink"></a></div>
+      <div class="cta">
+        <a class="btn pink" href="#price">料金をシミュレーション</a>
+        <a class="btn white" href="#works">作品を見る</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 実績（最新の4件。全部は works.html） -->
+  <section id="works">
+    <div class="wrap">
+      <span class="eyebrow">WORKS</span>
+      <h2>制作実績</h2>
+      <p class="lead">最新の作品です。</p>
+      <div class="grid" id="worksGrid" data-limit="4" data-limit-mobile="2"></div>
+      <div class="more"><a class="btn pink" href="works.html">もっと見る</a></div>
+    </div>
+  </section>
+
+  <!-- YouTube -->
+  <section id="youtube" class="yt-sec">
+    <div class="wrap"><div class="card yt" data-youtube></div></div>
+  </section>
+
+  <!-- 現在のスケジュール -->
+  <section id="schedule" class="sch-sec">
+    <div class="wrap">
+      <span class="eyebrow">SCHEDULE</span>
+      <h2>現在のスケジュール</h2>
+      <p class="lead">納期の月ごとの、受付状況の目安です。<span id="schedUpdated"></span></p>
+      <div class="card sch-wrap" id="schedList"></div>
+    </div>
+  </section>
+
+  <!-- 量産依頼（左右にスライド） -->
+  <section id="bulk">
+    <div class="wrap">
+      <span class="eyebrow">BULK ORDERS</span>
+      <h2>量産依頼</h2>
+      <p class="lead">気になるものがあれば、「ご依頼はこちら！」から投稿をご覧ください。<span id="bulkHint">左右にスライドできます。</span></p>
+      <div class="car-nav" id="bulkNav">
+        <button type="button" class="car-btn" id="bulkPrev" aria-label="前へ"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 5 8 12 15 19"/></svg></button>
+        <button type="button" class="car-btn" id="bulkNext" aria-label="次へ"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 5 16 12 9 19"/></svg></button>
+      </div>
+      <div class="car-track" id="bulkTrack" tabindex="0" aria-label="量産依頼の一覧（左右にスライドできます）"></div>
+    </div>
+  </section>
+
+  <!-- 料金・見積もり -->
+  <section id="price">
+    <div class="wrap">
+      <span class="eyebrow">PRICE</span>
+      <h2>料金・かんたん見積もり</h2>
+      <p class="lead">選ぶだけで概算が出ます。表示は税込、すべて商用利用込みの料金です。</p>
+      <div class="camp-banner" id="campBanner" hidden>
+        <span class="camp-ribbon">キャンペーン中</span>
+        <div class="camp-body">
+          <p class="camp-title" id="campTitle"></p>
+          <p class="camp-text" id="campText"></p>
+        </div>
+      </div>
+      <button type="button" class="notice-link" data-open="notesDialog" aria-haspopup="dialog">ご依頼の前に「ご依頼についての注意事項」をご確認ください →</button>
+
+      <div class="est" id="estimator">
+        <div class="card">
+          <div class="group">
+            <div class="grp-head">
+              <h3><span class="num">1</span>ご依頼の内容<small class="h-sub">複数選べます</small></h3>
+              <button type="button" class="clear-btn" id="clearBtn">選択をクリア</button>
+            </div>
+            <p class="note" style="margin:0 0 4px">押すたびに増え、丸を押すと1つ減ります。</p>
+            <div id="figBlocks"></div>
+            <div class="fig-cat" id="l2dBlock">
+              <h4>Live2D<small>先着特典あり</small></h4>
+              <p class="soon" id="l2dSoon">準備中です</p>
+              <div class="chips" id="l2dChips"></div>
+              <div class="disc" id="discBox" hidden>
+                <label><input type="checkbox" name="disc" checked><span id="discLabel"></span></label>
+              </div>
+            </div>
+          </div>
+
+          <div id="illustOptions">
+            <div class="group">
+              <h3><span class="num">2</span>納期</h3>
+              <p class="note" style="margin:0 0 8px">短納期はイラストのみ。スケジュールにより対応できない場合があります。</p>
+              <div class="chips" id="rushChips"></div>
+            </div>
+            <div class="group">
+              <h3><span class="num">3</span>背景</h3>
+              <div class="chips" id="bgChips"></div>
+            </div>
+            <div class="group">
+              <h3><span class="num">4</span>その他のオプション</h3>
+              <p class="note" style="margin:0 0 8px"></p>
+              <div class="chips" id="extraChips"></div>
+            </div>
+          </div>
+          <div class="disc" id="campBox" hidden>
+            <label><input type="checkbox" name="camp" id="campCheck" checked><span id="campLabel"></span></label>
+            <small class="camp-note" id="campNote"></small>
+          </div>
+        </div>
+
+        <aside class="card summary" aria-live="polite">
+          <h3>お見積もり（概算）</h3>
+          <ul class="lines" id="lines"></ul>
+          <div class="total"><span>合計（税込）</span><b id="total">—</b></div>
+          <p class="note" id="note"></p>
+          <a class="btn pink" href="#contact">この内容で相談する</a>
+          <button type="button" class="btn white" id="copyBtn">見積もりをコピー</button>
+          <span class="copy-msg" id="copyMsg" role="status"></span>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- お問い合わせ -->
+  <section id="contact">
+    <div class="wrap">
+      <span class="eyebrow">CONTACT</span>
+      <h2>お問い合わせ</h2>
+      <p class="lead">ご依頼・ご相談は、こちらのフォーム、メールアドレス、X（旧Twitter）まで。</p>
+      <div class="tabs" role="tablist" aria-label="ご連絡の方法">
+        <button type="button" role="tab" class="tab" id="tabForm" aria-selected="true" aria-controls="panelForm">フォームで送る</button>
+        <button type="button" role="tab" class="tab" id="tabDm" aria-selected="false" aria-controls="panelDm" tabindex="-1">Xやメールで相談する</button>
+      </div>
+      <div id="panelForm" role="tabpanel" aria-labelledby="tabForm">
+      <div class="card">
+        <form id="contactForm" novalidate>
+          <fieldset class="f-set">
+            <legend>ご依頼者様</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="clientType" value="個人" checked><span>個人</span></label>
+              <label class="chip"><input type="radio" name="clientType" value="法人・企業"><span>法人・企業様</span></label>
+            </div>
+          </fieldset>
+          <label class="f">お名前（ハンドルネーム可）
+            <input type="text" name="name" required autocomplete="name">
+          </label>
+          <label class="f">メールアドレス
+            <input type="email" name="email" required autocomplete="email">
+          </label>
+          <label class="f">見積もり内容 <small>見積もりで選んだ内容が自動で入ります（書き換えもできます）</small>
+            <textarea name="estimate" id="estimateField"></textarea>
+          </label>
+          <label class="f">ご相談内容 <small>書き込む形になっています。分かる範囲で大丈夫です</small>
+            <textarea name="message" id="messageField" required rows="12"></textarea>
+          </label>
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+          <div class="status" id="formStatus" role="status"></div>
+          <button class="btn pink" type="submit" style="justify-self:start">送信する</button>
+        </form>
+      </div>
+      </div>
+      <div id="panelDm" role="tabpanel" aria-labelledby="tabDm" hidden>
+        <div class="card profile" id="profileCard" aria-label="連絡先"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="flinks"><a href="works.html">作品</a><button type="button" class="linkbtn" data-open="notesDialog" aria-haspopup="dialog">ご依頼についての注意事項</button><a href="#contact">お問い合わせ</a></p>
+    <small>&copy; <span data-sitename>SITE NAME</span></small>
+  </div>
+</footer>
+
+<div class="mbar" id="mbar" aria-hidden="true">
+  <span>合計（税込）<b id="mTotal">—</b></span>
+  <a class="btn pink" href="#contact">相談する</a>
+</div>
+
+<dialog id="notesDialog" class="notes-dialog" aria-labelledby="notesTitle">
+  <div class="nd-head">
+    <h2 id="notesTitle">ご依頼についての注意事項</h2>
+    <button type="button" class="btn white nd-close" data-close>閉じる</button>
+  </div>
+  <div class="nd-body">
+    
+    <div class="card note-card" style="margin-top:0">
+        <h2>ご依頼の流れ</h2>
+        <ol>
+          <li>【お問い合わせ】フォーム、メール、X（旧Twitter）のいずれかでご連絡ください。</li>
+          <li>【確認】ご希望の内容を確認して、正式なお見積もり、納期をご案内します。</li>
+          <li>【お支払い】原則先払い、銀行振込です。その他の方法や分割等も内容により対応可能。お気軽にご相談ください。</li>
+          <li>【制作開始】入金確認後制作を開始いたします。</li>
+          <li>【ラフ】ラフをご確認いただき、修正があればお伝えください。</li>
+          <li>【清書】清書をご確認いただき、修正があれば修正し、納品。</li>
+        </ol>
+      </div>
+
+      <div class="card note-card">
+        <h2>料金について</h2>
+        <ul>
+          <li>表示している金額は、すべて税込です。</li>
+          <li>すべて商用利用込みの料金です。</li>
+          <li>かんたん見積もりは概算です。正式なお見積もりは内容確認後改めてご案内します。</li>
+          <li>「〜」が付いている項目は最低金額です。内容によって変わります。</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>納期について</h2>
+        <ul>
+          <li>通常の納期：内容によりますが、ご依頼から納品まで通常1か月程頂いております。</li>
+          <li>現在の受付状況は、トップページの「<a href="index.html#schedule">現在のスケジュール</a>」をご覧ください。</li>
+          <li>短納期オプションはスケジュールによってはお受けできない場合があります。お急ぎの場合はあらかじめお伝えください。</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>修正について</h2>
+        <ul>
+          <li>無料の修正は、ラフの段階で2回までです。</li>
+          <li>3回目以降は、500円〜の追加料金をいただきます。内容によって金額は異なります。</li>
+          <li>完成後の修正は、軽微なもので1回のみ無料です。大幅な変更や2回目以降の修正は、同じく500円〜の追加料金をいただきます。</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>利用範囲・著作権について</h2>
+        <ul>
+          <li>商用利用に含まれる範囲：収益化している活動での使用、将来的な収益化を目指す活動での使用、グッズの販売を含みます。</li>
+          <li>法人でのご利用：個人の方と同じ料金・範囲です。商用利用の範囲以外での使用用途をご希望の場合は事前にご相談ください（別料金となる場合があります）</li>
+          <li>著作権の扱い：著作権は譲渡しません。著作権の譲渡をご希望の場合は、別途ご相談ください（別料金となります）</li>
+          <li>禁止事項：イラストの二次配布、自作発言、AIへの学習・読み込みはお断りしています。</li>
+          <li>実績掲載：完成したイラストは制作実績としてこのサイトやSNSに掲載することがあります。掲載を控えたい場合は追加オプションとなります（5,000円）</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>キャンセル・返金について</h2>
+        <ul>
+          <li>制作が始まってからのキャンセルは、<strong class="em-u">原則お受けしていません。</strong></li>
+          <li>もしご希望される場合は、ラフ提出前→全額返金、ラフ提出後以降→返金不可・進行度合いによってはキャンセル料をいただくことがあります。</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>お預かりする情報について</h2>
+        <ul>
+          <li>お問い合わせでお預かりする個人情報・ご相談内容は、ご連絡と制作以外の用途で一切使用致しません。</li>
+          <li>お問い合わせフォームの内容は、外部のフォーム受付サービスを通して受け取っています。</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>お受けできないご依頼</h2>
+        <ul>
+          <li>政治、宗教に関するご依頼</li>
+          <li>公式のガイドラインで、有償でのご依頼が認められていない二次創作</li>
+          <li>他者を攻撃する内容のご依頼</li>
+          <li>判断に迷うご依頼は、事前にご相談ください。</li>
+        </ul>
+      </div>
+
+      <div class="card note-card">
+        <h2>Live2Dについて</h2>
+        <ul>
+          <li>準備中です。YoutubeやXに進捗をアップしていきますのでよければご確認ください！</li>
+        </ul>
+      </div>
+    <div class="more"><button type="button" class="btn pink" data-close>閉じて戻る</button></div>
+  </div>
+</dialog>
+
+<dialog id="lightbox" class="lb" aria-label="拡大表示">
+  <div class="lb-media" id="lbMedia"></div>
+  <div class="lb-info">
+    <p class="lb-title" id="lbTitle"></p>
+    <span class="tag" id="lbTag"></span>
+    <p class="lb-desc" id="lbDesc"></p>
+    <div class="lb-actions" id="lbActions"></div>
+  </div>
+  <button class="btn" type="button" id="lightboxClose">閉じる</button>
+</dialog>
+
+<noscript><p style="text-align:center;padding:24px">見積もりとフォームを使うには、JavaScriptを有効にしてください。</p></noscript>
+
+<script src="config.js"></script>
+<script src="common.js"></script>
+<script>
+/* サイト名・連絡先・トップ画像・作品は config.js、料金はこの下の PRICES を編集します */
+
+// ==LOGIC-START==
+// 料金はすべて「税込」で書きます。書いた数字がそのまま表示されます。
+const PRICES = {
+  categories: {
+    tokushin: { label: "等身イラスト", note: "立ち絵・一枚絵など", sizes: [
+      { id: "full",  label: "全身", price: 12000 },
+      { id: "knee",  label: "膝上", price: 10000 },
+      { id: "waist", label: "腰上", price: 8000 },
+      { id: "bust",  label: "胸上", price: 7000 }
+    ]},
+    mini: { label: "ミニキャライラスト", note: "デフォルメキャラクター", sizes: [
+      { id: "full",  label: "全身", price: 7000 },
+      { id: "knee",  label: "膝上", price: 6000 },
+      { id: "waist", label: "腰上", price: 5000 },
+      { id: "bust",  label: "胸上", price: 4000 }
+    ]}
+  },
+  // Live2D（仮置き）。使わない間は enabled を false にすると隠れます
+  live2d: {
+    enabled: false,   // ← Live2Dを始めるときは true にします（準備中の表示が消えて、メニューが出ます）
+    discountRate: 0.5,
+    discountLabel: "先着3名様 50%OFF を適用する",
+    items: [
+      { id: "illust",   label: "Live2D用イラスト",           price: 15000, desc: "Live2Dで動かす前提の、大きめサイズの立ち絵" },
+      { id: "parts",    label: "パーツ分け",                 price: 10000, from: true, desc: "お手持ちの立ち絵をパーツ分けします" },
+      { id: "simple",   label: "Live2D シンプルプラン",       price: 20000, desc: "基本の動きを中心にしたモデリング" },
+      { id: "standard", label: "Live2D スタンダードプラン",   price: 40000, desc: "表情や揺れものにも対応した標準モデリング" }
+    ]
+  },
+  rush: [
+    { id: "none", label: "通常納期",   price: 0 },
+    { id: "w2",   label: "2週間以内",  price: 1000 },
+    { id: "w1",   label: "1週間以内",  price: 3000 },
+    { id: "d3",   label: "3日以内",    price: 5000 }
+  ],
+  background: [
+    { id: "simple",  label: "簡易背景",       price: 0,    desc: "" },
+    { id: "basic",   label: "シンプルな背景", price: 1000, desc: "パターン・モチーフ・空など" },
+    { id: "complex", label: "複雑な背景",     price: 2000, from: true, desc: "建物など" }
+  ],
+  extras: [
+    { id: "costume", label: "複雑な衣装・装飾", price: 1000, from: true, type: "check" },
+    { id: "logo",    label: "ネームロゴ制作",   price: 1500, type: "check" },
+    { id: "promo",   label: "立ち絵公開画像",   price: 2500, type: "check" },
+    { id: "props",   label: "小物追加",         price: 500,  from: true, type: "count", unit: "点" },
+    { id: "nopost",  label: "実績掲載なし",     price: 5000, type: "check", max: 1, desc: "制作実績への掲載を控えます" }
+  ]
+};
+
+const yen = n => n.toLocaleString("ja-JP") + "円";
+
+function calculate(s) {
+  const lines = [];
+  let hasFrom = false;
+  const add = (label, price, from) => { lines.push({ label, price, from: !!from }); if (from) hasFrom = true; };
+
+  // イラスト：等身・ミニキャラの、範囲ごとの人数
+  let illustCount = 0;
+  Object.entries(PRICES.categories).forEach(([cid, cat]) => cat.sizes.forEach(z => {
+    const n = (s.figs || {})[cid + ":" + z.id] || 0;
+    if (n > 0) { illustCount += n; add(cat.label + "（" + z.label + "）" + (n > 1 ? " ×" + n : ""), z.price * n); }
+  }));
+  // 納期・背景・オプションは、イラストがあるときだけ（全体に1回）
+  if (illustCount > 0) {
+    const rush = PRICES.rush.find(r => r.id === s.rush);
+    if (rush && rush.price) add("短納期：" + rush.label, rush.price);
+    const bg = PRICES.background.find(b => b.id === s.bg);
+    if (bg && bg.price) add("背景：" + bg.label, bg.price, bg.from);
+    PRICES.extras.forEach(e => {
+      const n = s.extras[e.id] || 0;
+      if (n > 0) add(e.label + (n > 1 ? " ×" + n : ""), e.price * n, e.from);
+    });
+  }
+  // Live2D
+  let l2dSubtotal = 0;
+  PRICES.live2d.items.filter(i => (s.live2d || []).includes(i.id)).forEach(i => { add(i.label, i.price, i.from); l2dSubtotal += i.price; });
+
+  const subtotal = lines.reduce((a, l) => a + l.price, 0);
+  // 先着特典は、Live2Dの分だけにかかる
+  let discount = 0;
+  if (s.discount && PRICES.live2d.discountRate && l2dSubtotal > 0) {
+    discount = Math.round(l2dSubtotal * PRICES.live2d.discountRate);
+  }
+  // キャンペーン割引：campaignRate（例 0.15）があるときだけ、割引後の合計にかける
+  let campaign = 0;
+  if (s.campaignRate > 0 && subtotal - discount > 0) {
+    campaign = Math.round((subtotal - discount) * s.campaignRate);
+  }
+  return {
+    lines, illustCount, subtotal, discount, campaign, total: subtotal - discount - campaign, hasFrom,
+    campaignLabel: s.campaignLabel || "キャンペーン割引", campaignPct: Math.round((s.campaignRate || 0) * 100)
+  };
+}
+
+function estimateText(r) {
+  if (!r.lines.length) return "";
+  const rows = r.lines.map(l => "・" + l.label + "：" + yen((l.price)) + (l.from ? "〜" : ""));
+  if (r.discount) rows.push("・先着特典：-" + yen((r.discount)));
+  if (r.campaign) rows.push("・" + r.campaignLabel + "（" + r.campaignPct + "%OFF）：-" + yen((r.campaign)));
+  rows.push("合計（税込）：" + yen((r.total)) + (r.hasFrom ? "〜" : ""));
+  return rows.join("\n");
+}
+// ==LOGIC-END==
+
+/* ---------- 画面の組み立て ---------- */
+function renderHero() {
+  const h = CONFIG.hero, hero = $("#hero"), media = $("#heroMedia");
+  hero.style.setProperty("--dim", h.dim);
+  if (!h.src) return;
+  hero.classList.add("has-media");
+  hero.style.setProperty("--pos", h.position || "center");
+  if (h.positionMobile) hero.style.setProperty("--pos-m", h.positionMobile);
+  let el;
+  if (h.type === "video") {
+    el = document.createElement("video");
+    el.muted = true; el.loop = true; el.playsInline = true;
+    el.setAttribute("muted", ""); el.setAttribute("playsinline", "");
+    if (h.poster) el.poster = h.poster;
+    el.src = h.src;
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.autoplay = true;
+      const p = el.play(); if (p && p.catch) p.catch(() => {});
+    }
+  } else {
+    el = document.createElement("img");
+    el.src = h.src; el.alt = "";
+  }
+  if (h.blur > 0) { el.style.setProperty("--blur", h.blur + "px"); el.style.transform = "scale(1.05)"; }
+  el.onerror = () => { hero.classList.remove("has-media"); el.remove(); };
+  media.appendChild(el);
+}
+const state = { figs: {}, rush: "none", bg: "simple", extras: {}, live2d: [], discount: true, campaign: true };
+
+/* ---------- キャンペーン（期限つき。過ぎたら自動で消える） ---------- */
+const CAMP = (function () {
+  if (typeof CAMPAIGN === "undefined" || !CAMPAIGN.enabled || !(CAMPAIGN.rate > 0)) return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(CAMPAIGN.endDate || "");
+  if (!m) return null;
+  const end = new Date(m[1] + "-" + m[2] + "-" + m[3] + "T23:59:59+09:00");
+  if (isNaN(end.getTime()) || Date.now() > end.getTime()) return null;
+  const wd = "日月火水木金土"[new Date(Date.UTC(+m[1], +m[2] - 1, +m[3])).getUTCDay()];
+  const yearPart = +m[1] !== new Date().getFullYear() ? m[1] + "年" : "";
+  return {
+    rate: CAMPAIGN.rate, pct: Math.round(CAMPAIGN.rate * 100), name: CAMPAIGN.name || "キャンペーン",
+    endText: yearPart + (+m[2]) + "月" + (+m[3]) + "日（" + wd + "）まで", stack: !!CAMPAIGN.withLive2dSenchaku
+  };
+})();
+const campaignBlocked = () => !!CAMP && state.live2d.length > 0 && state.discount && !CAMP.stack;
+const campaignOn = () => !!CAMP && state.campaign && !campaignBlocked();
+function renderCampaign() {
+  if (!CAMP) return;
+  $("#heroCamp").hidden = false;
+  $("#heroCampLink").innerHTML = '<span class="nb">' + esc(CAMP.name) + "　" + CAMP.pct + '%OFF</span><span class="nb">' + esc(CAMP.endText) + "</span>";
+  $("#campBanner").hidden = false;
+  $("#campTitle").innerHTML = '<span class="nb">' + esc(CAMP.name) + '</span><span class="nb">見積もりの合計から' + CAMP.pct + "%OFF</span>";
+  $("#campText").textContent = CAMP.endText + "。見積もりを使ってお問い合わせいただいた方が対象です。見積もりの内容を添えてご連絡ください。";
+  $("#campBox").hidden = false;
+  $("#campLabel").textContent = CAMP.name + "（" + CAMP.pct + "%OFF）を適用する　" + CAMP.endText;
+}
+
+document.title = CONFIG.siteName + " | イラスト・Live2Dのご依頼";
+
+function chip(type, name, value, label, sub, checked) {
+  return '<label class="chip"><input type="' + type + '" name="' + name + '" value="' + value + '"' + (checked ? " checked" : "") +
+    "><span>" + label + (sub ? "<small>" + sub + "</small>" : "") + "</span></label>";
+}
+const baseLabel = (p, from) => yen((p)) + (from ? "〜" : "");
+const plusLabel = (p, from) => p === 0 ? "無料" : "+" + yen((p)) + (from ? "〜" : "");
+
+// 押すたびに増えるボタン。右はしの丸が個数（丸を押すと1つ減る）
+function cchip(attr, id, label, sub) {
+  return '<div class="cwrap" ' + attr + '="' + id + '"><button type="button" class="cchip" aria-pressed="false"><span>' + label +
+    (sub ? "<small>" + sub + "</small>" : "") + '</span></button><button type="button" class="cnt" hidden></button></div>';
+}
+function renderFigs() {
+  $("#figBlocks").innerHTML = Object.entries(PRICES.categories).map(([cid, c]) =>
+    '<div class="fig-cat"><h4>' + c.label + "<small>" + c.note + "</small></h4><div class=\"chips\">" +
+    c.sizes.map(z => cchip("data-fig", cid + ":" + z.id, z.label, baseLabel(z.price) + " ／ 1人")).join("") +
+    "</div></div>").join("");
+}
+function syncCounts() {
+  document.querySelectorAll(".cwrap").forEach(w => {
+    const n = (w.dataset.fig ? state.figs[w.dataset.fig] : state.extras[w.dataset.extra]) || 0;
+    const bd = w.querySelector(".cnt");
+    bd.hidden = n === 0; bd.textContent = n;
+    bd.setAttribute("aria-label", "現在" + n + "。押すと1つ減らします");
+    const c = w.querySelector(".cchip"); c.classList.toggle("on", n > 0); c.setAttribute("aria-pressed", n > 0);
+  });
+}
+function renderOptions() {
+  $("#rushChips").innerHTML = PRICES.rush.map(r => chip("radio", "rush", r.id, r.label, r.price ? plusLabel(r.price) : "", state.rush === r.id)).join("");
+  $("#bgChips").innerHTML = PRICES.background.map(b => chip("radio", "bg", b.id, b.label, [plusLabel(b.price, b.from), b.desc].filter(Boolean).join(" ／ "), state.bg === b.id)).join("");
+  $("#extraChips").innerHTML = PRICES.extras
+    .map(e => cchip("data-extra", e.id, e.label, [plusLabel(e.price, e.from), e.desc].filter(Boolean).join(" ／ "))).join("");
+}
+function renderLive2D() {
+  const on = PRICES.live2d.enabled;
+  $("#l2dBlock").querySelector("h4 small").hidden = !on;
+  $("#l2dChips").hidden = !on;
+  $("#l2dSoon").hidden = on;
+  $("#l2dChips").innerHTML = PRICES.live2d.items.map(i => chip("checkbox", "l2d", i.id, i.label, [baseLabel(i.price, i.from), i.desc].filter(Boolean).join(" ／ "), false)).join("");
+  $("#discLabel").textContent = PRICES.live2d.discountLabel;
+}
+let lastResult = null;
+function update() {
+  if (CAMP) {
+    const cb = $("#campCheck");
+    cb.checked = campaignOn(); cb.disabled = campaignBlocked();
+    $("#campNote").textContent = campaignBlocked() ? "Live2Dの先着特典とは同時に使えません。先着特典のチェックを外すと選べます。" : "";
+  }
+  $("#discBox").hidden = state.live2d.length === 0;
+  const r = calculate({ ...state, campaignRate: campaignOn() ? CAMP.rate : 0, campaignLabel: CAMP ? CAMP.name : "" });
+  lastResult = r;
+  const list = $("#lines");
+  if (!r.lines.length) {
+    list.innerHTML = '<li class="empty">メニューを選ぶと、ここに内訳が出ます</li>';
+    $("#total").textContent = "—"; $("#mTotal").textContent = "—";
+    $("#note").textContent = "";
+    $("#estimateField").value = "";
+    return;
+  }
+  let html = r.lines.map(l => "<li><span>" + l.label + "</span><span>" + yen((l.price)) + (l.from ? "〜" : "") + "</span></li>").join("");
+  if (r.discount) html += '<li class="minus"><span>先着特典</span><span>-' + yen((r.discount)) + "</span></li>";
+  if (r.campaign) html += '<li class="minus"><span>' + esc(r.campaignLabel) + "（" + r.campaignPct + "%OFF）</span><span>-" + yen((r.campaign)) + "</span></li>";
+  list.innerHTML = html;
+  const total = yen((r.total)) + (r.hasFrom ? "〜" : "");
+  $("#total").textContent = total; $("#mTotal").textContent = total;
+  $("#note").textContent = (r.hasFrom ? "「〜」付きの項目は最低金額です。" : "") + "あくまで概算です。正式なお見積もりは、内容を確認してからご案内します。";
+  $("#estimateField").value = estimateText(r);
+}
+
+$("#estimator").addEventListener("change", e => {
+  const t = e.target;
+  if (t.name === "rush") state.rush = t.value;
+  else if (t.name === "bg") state.bg = t.value;
+  else if (t.name === "l2d") state.live2d = [...document.querySelectorAll("input[name=l2d]:checked")].map(i => i.value);
+  else if (t.name === "disc") state.discount = t.checked;
+  else if (t.name === "camp") state.campaign = t.checked;
+  update();
+});
+$("#estimator").addEventListener("click", e => {
+  if (e.target.closest("#clearBtn")) {
+    state.figs = {}; state.extras = {}; state.live2d = []; state.rush = "none"; state.bg = "simple";
+    renderOptions(); renderLive2D(); syncCounts(); update();
+    return;
+  }
+  const w = e.target.closest(".cwrap");
+  if (!w) return;
+  const store = w.dataset.fig ? state.figs : state.extras;
+  const id = w.dataset.fig || w.dataset.extra;
+  const dec = !!e.target.closest(".cnt");
+  const ex = w.dataset.extra ? PRICES.extras.find(x => x.id === id) : null;
+  store[id] = Math.max(0, Math.min((ex && ex.max) || 20, (store[id] || 0) + (dec ? -1 : 1)));
+  syncCounts(); update();
+});
+
+/* ---------- 見積もりのコピー ---------- */
+(function () {
+  const msg = $("#copyMsg"); let timer;
+  const say = m => { msg.textContent = m; clearTimeout(timer); timer = setTimeout(() => { msg.textContent = ""; }, 6000); };
+  $("#copyBtn").addEventListener("click", async () => {
+    if (!lastResult || !lastResult.lines.length) { say("メニューを選ぶと、コピーできます。"); return; }
+    const text = "【お見積もり（概算・税込）】\n" + estimateText(lastResult) + "\n※サイトの見積もり機能で作成しました";
+    say((await copyText(text)) ? "コピーしました。XのDMやメールに貼り付けてください。" : "コピーできませんでした。下のフォームの「見積もり内容」からコピーしてください。");
+  });
+})();
+
+/* ---------- 連絡方法の切り替え ---------- */
+(function () {
+  const tabs = [$("#tabForm"), $("#tabDm")], panels = [$("#panelForm"), $("#panelDm")];
+  const show = i => tabs.forEach((t, k) => {
+    t.setAttribute("aria-selected", k === i); t.tabIndex = k === i ? 0 : -1; panels[k].hidden = k !== i;
+  });
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => show(i));
+    t.addEventListener("keydown", e => {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const n = 1 - i; show(n); tabs[n].focus(); }
+    });
+  });
+})();
+
+/* ---------- フォーム ---------- */
+$("#contactForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = e.target, st = $("#formStatus");
+  const show = (msg, cls) => { st.textContent = msg; st.className = "status show " + cls; };
+  if (!form.name.value.trim() || !form.email.value.trim() || !form.message.value.trim()) {
+    show("お名前・メールアドレス・ご相談内容を入力してください。", "warn"); return;
+  }
+  if (form.message.value.trim() === form.message.defaultValue.trim()) {
+    show("ご相談内容の項目に、書き込んでください。", "warn"); return;
+  }
+  if (!CONFIG.formEndpoint) {
+    show("フォームの送信先がまだ設定されていません（config.js の formEndpoint を設定してください）。", "warn"); return;
+  }
+  try {
+    const fd = new FormData(form);
+    const subject = "【" + CONFIG.siteName + "】お問い合わせ";
+    fd.append("_subject", subject); fd.append("subject", subject);
+    if (CONFIG.formAccessKey) fd.append("access_key", CONFIG.formAccessKey);
+    const res = await fetch(CONFIG.formEndpoint, { method: "POST", headers: { Accept: "application/json" }, body: fd });
+    if (!res.ok) throw new Error("status " + res.status);
+    form.reset(); update();
+    show("送信しました。内容を確認して、ご連絡します。", "ok");
+  } catch (err) {
+    show("送信できませんでした。時間をおいてもう一度お試しください。", "warn");
+  }
+});
+
+renderHero(); renderFigs(); renderOptions(); renderLive2D(); renderCampaign(); syncCounts(); update();
+</script>
+</body>
+</html>
