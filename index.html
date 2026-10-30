@@ -103,33 +103,53 @@
               <h3><span class="num">1</span>ご依頼の内容<small class="h-sub">複数選べます</small></h3>
               <button type="button" class="clear-btn" id="clearBtn">選択をクリア</button>
             </div>
-            <p class="note" style="margin:0 0 4px">押すたびに増え、丸を押すと1つ減ります。</p>
+            <p class="note" style="margin:0 0 4px">押すたびに増え、丸を押すと1つ減ります。タイトルを押すと開閉できます。</p>
             <div id="figBlocks"></div>
-            <div class="fig-cat" id="l2dBlock">
-              <h4>Live2D<small>先着特典あり</small></h4>
-              <p class="soon" id="l2dSoon">準備中です</p>
-              <div class="chips" id="l2dChips"></div>
-              <div class="disc" id="discBox" hidden>
-                <label><input type="checkbox" name="disc" checked><span id="discLabel"></span></label>
+            <details class="fold" data-fold="l2d" id="l2dBlock">
+              <summary><span class="fold-t">Live2D<small>先着特典あり</small></span><i class="fc" hidden></i></summary>
+              <div class="fold-body">
+                <p class="soon" id="l2dSoon">準備中です</p>
+                <div class="chips" id="l2dChips"></div>
+                <div class="disc" id="discBox" hidden>
+                  <label><input type="checkbox" name="disc" checked><span id="discLabel"></span></label>
+                </div>
               </div>
-            </div>
+            </details>
+            <div id="menuBlocks"></div>
+            <details class="fold" data-fold="sub" id="subBlock">
+              <summary><span class="fold-t">サブスクプラン<small>毎月の定期納品</small></span><i class="fc" hidden></i></summary>
+              <div class="fold-body">
+                <p class="sub-desc">月に1枚、1枚絵などを定期納品するプランです。「こういう内容を毎月お願いしたいな」というものがあれば、等身腰上・複雑な背景などのオプションと合わせて選択し、サブスクご希望の場合はチェックを入れてください。</p>
+                <ul class="perk">
+                  <li>毎月の金額から10%オフ</li>
+                  <li>小物は1個分の料金で付け放題</li>
+                  <li>毎月、表情差分を1個サービス（オプションで選ぶと、1個分が無料になります）</li>
+                </ul>
+                <div class="disc">
+                  <label><input type="checkbox" name="sub" id="subCheck"><span>サブスクプランを希望する</span></label>
+                </div>
+                <p class="note" style="margin:10px 0 0">※キャンペーンも併用可能です（初回一か月分のみ）<br>※原則、最低三か月以上のご利用をお願いしております<br>※1枚絵に限らず、どんな内容でも一度ご相談ください</p>
+              </div>
+            </details>
           </div>
 
           <div id="illustOptions">
-            <div class="group">
-              <h3><span class="num">2</span>納期</h3>
-              <p class="note" style="margin:0 0 8px">短納期はイラストのみ。スケジュールにより対応できない場合があります。</p>
-              <div class="chips" id="rushChips"></div>
-            </div>
-            <div class="group">
-              <h3><span class="num">3</span>背景</h3>
-              <div class="chips" id="bgChips"></div>
-            </div>
-            <div class="group">
-              <h3><span class="num">4</span>その他のオプション</h3>
-              <p class="note" style="margin:0 0 8px"></p>
-              <div class="chips" id="extraChips"></div>
-            </div>
+            <div class="opt-head"><h3>オプション</h3></div>
+            <details class="fold" data-fold="rush">
+              <summary><span class="fold-t">納期</span><i class="fc" hidden></i></summary>
+              <div class="fold-body">
+                <p class="note" style="margin:0 0 8px">短納期はイラストのみ。スケジュールにより対応できない場合があります。</p>
+                <div class="chips" id="rushChips"></div>
+              </div>
+            </details>
+            <details class="fold" data-fold="bg">
+              <summary><span class="fold-t">背景</span><i class="fc" hidden></i></summary>
+              <div class="fold-body"><div class="chips" id="bgChips"></div></div>
+            </details>
+            <details class="fold" data-fold="extras">
+              <summary><span class="fold-t">その他のオプション</span><i class="fc" hidden></i></summary>
+              <div class="fold-body"><div class="chips" id="extraChips"></div></div>
+            </details>
           </div>
           <div class="disc" id="campBox" hidden>
             <label><input type="checkbox" name="camp" id="campCheck" checked><span id="campLabel"></span></label>
@@ -140,7 +160,8 @@
         <aside class="card summary" aria-live="polite">
           <h3>お見積もり（概算）</h3>
           <ul class="lines" id="lines"></ul>
-          <div class="total"><span>合計（税込）</span><b id="total">—</b></div>
+          <div class="total"><span id="totalLabel">合計（税込）</span><b id="total">—</b></div>
+          <div class="total first" id="firstRow" hidden><span>初月（キャンペーン適用）</span><b id="firstTotal">—</b></div>
           <p class="note" id="note"></p>
           <a class="btn pink" href="#contact">この内容で相談する</a>
           <button type="button" class="btn white" id="copyBtn">見積もりをコピー</button>
@@ -203,7 +224,7 @@
 </footer>
 
 <div class="mbar" id="mbar" aria-hidden="true">
-  <span>合計（税込）<b id="mTotal">—</b></span>
+  <span><span id="mLabel">合計（税込）</span><b id="mTotal">—</b></span>
   <a class="btn pink" href="#contact">相談する</a>
 </div>
 
@@ -359,11 +380,30 @@ const PRICES = {
     { id: "basic",   label: "シンプルな背景", price: 1000, desc: "パターン・モチーフ・空など" },
     { id: "complex", label: "複雑な背景",     price: 2000, from: true, desc: "建物など" }
   ],
+  // アニメーション・ドット絵など。soon:true は「準備中」の表示だけ。link を入れると、下にリンクが出ます
+  menus: {
+    animation: { label: "アニメーション", note: "", items: [
+      { id: "motion", label: "モーションアニメ", soon: true, desc: "今後Live2Dで制作予定（準備中）" },
+      { id: "hand",   label: "手書きアニメ",     price: 30000, from: true }
+    ], foot: "※秒数や内容によってかなり変化します。まずはお問い合わせを！" },
+    dot: { label: "ドット絵", note: "", items: [
+      { id: "dot",   label: "ドット絵",                        price: 2000, from: true },
+      { id: "mc64",  label: "マイクラ用スキン 64×64",          price: 4000 },
+      { id: "mc128", label: "マイクラ用スキン 128×128",        price: 6000 }
+    ], foot: "通常ドット絵のサンプルは準備中…サイズによってかなり異なるため、詳細はお問い合わせください。",
+       link: { text: "マイクラ用スキンのサンプルはこちら", href: "works.html#tag=その他" } }
+  },
+  // サブスクプラン：毎月の金額からの割引率（表の文章は index.html の中にあります）
+  sub: { rate: 0.1 },
   extras: [
     { id: "costume", label: "複雑な衣装・装飾", price: 1000, from: true, type: "check" },
     { id: "logo",    label: "ネームロゴ制作",   price: 1500, type: "check" },
     { id: "promo",   label: "立ち絵公開画像",   price: 2500, type: "check" },
     { id: "props",   label: "小物追加",         price: 500,  from: true, type: "count", unit: "点" },
+    { id: "chara",   label: "キャラデザ",       price: 4000, type: "check" },
+    { id: "outfit",  label: "衣装デザイン",     price: 2000, type: "check" },
+    { id: "expr",    label: "表情差分",         price: 500,  type: "check" },
+    { id: "pose",    label: "ポーズ差分",       price: 2000, type: "check" },
     { id: "nopost",  label: "実績掲載なし",     price: 5000, type: "check", max: 1, desc: "制作実績への掲載を控えます" }
   ]
 };
@@ -392,33 +432,68 @@ function calculate(s) {
       if (n > 0) add(e.label + (n > 1 ? " ×" + n : ""), e.price * n, e.from);
     });
   }
+  // メニュー（アニメーション・ドット絵など）
+  Object.values(PRICES.menus).forEach(m => m.items.forEach(i => {
+    const n = (s.items || {})[i.id] || 0;
+    if (!i.soon && n > 0) add(i.label + (n > 1 ? " ×" + n : ""), i.price * n, i.from);
+  }));
   // Live2D
   let l2dSubtotal = 0;
   PRICES.live2d.items.filter(i => (s.live2d || []).includes(i.id)).forEach(i => { add(i.label, i.price, i.from); l2dSubtotal += i.price; });
 
+  // サブスクの特典（小物は1個分の料金・表情差分1個サービス）
+  const isSub = !!(s.sub && lines.length);
+  const perks = [];
+  if (isSub && illustCount > 0) {
+    const props = PRICES.extras.find(e => e.id === "props"), np = s.extras.props || 0;
+    if (props && np > 1) perks.push({ label: "サブスク特典：小物は1個分の料金", amount: (np - 1) * props.price });
+    const expr = PRICES.extras.find(e => e.id === "expr");
+    if (expr && (s.extras.expr || 0) > 0) perks.push({ label: "サブスク特典：表情差分1個サービス", amount: expr.price });
+  }
+
   const subtotal = lines.reduce((a, l) => a + l.price, 0);
+  const perkTotal = perks.reduce((a, p) => a + p.amount, 0);
   // 先着特典は、Live2Dの分だけにかかる
   let discount = 0;
   if (s.discount && PRICES.live2d.discountRate && l2dSubtotal > 0) {
     discount = Math.round(l2dSubtotal * PRICES.live2d.discountRate);
   }
-  // キャンペーン割引：campaignRate（例 0.15）があるときだけ、割引後の合計にかける
+  const afterPerks = subtotal - perkTotal - discount;
+  const subPct = isSub ? Math.round(PRICES.sub.rate * 100) : 0;
+  const subDiscount = isSub ? Math.round(afterPerks * PRICES.sub.rate) : 0;
+  const monthly = afterPerks - subDiscount;            // 毎月の金額（サブスクでないときは、そのまま合計の元になる金額）
+  // キャンペーン割引：campaignRate（例 0.15）があるときだけ。サブスクのときは、初月だけにかかる
   let campaign = 0;
-  if (s.campaignRate > 0 && subtotal - discount > 0) {
-    campaign = Math.round((subtotal - discount) * s.campaignRate);
+  if (s.campaignRate > 0 && monthly > 0) {
+    campaign = Math.round(monthly * s.campaignRate);
   }
   return {
-    lines, illustCount, subtotal, discount, campaign, total: subtotal - discount - campaign, hasFrom,
+    lines, illustCount, subtotal, perks, discount, isSub, subPct, subDiscount, monthly, campaign,
+    firstMonth: monthly - campaign,
+    total: isSub ? monthly : monthly - campaign, hasFrom,
     campaignLabel: s.campaignLabel || "キャンペーン割引", campaignPct: Math.round((s.campaignRate || 0) * 100)
   };
 }
 
 function estimateText(r) {
   if (!r.lines.length) return "";
-  const rows = r.lines.map(l => "・" + l.label + "：" + yen((l.price)) + (l.from ? "〜" : ""));
-  if (r.discount) rows.push("・先着特典：-" + yen((r.discount)));
-  if (r.campaign) rows.push("・" + r.campaignLabel + "（" + r.campaignPct + "%OFF）：-" + yen((r.campaign)));
-  rows.push("合計（税込）：" + yen((r.total)) + (r.hasFrom ? "〜" : ""));
+  const star = r.hasFrom ? "〜" : "";
+  const rows = r.isSub ? ["【サブスクプラン希望】"] : [];
+  r.lines.forEach(l => rows.push("・" + l.label + "：" + yen(l.price) + (l.from ? "〜" : "")));
+  r.perks.forEach(p => rows.push("・" + p.label + "：-" + yen(p.amount)));
+  if (r.discount) rows.push("・先着特典：-" + yen(r.discount));
+  if (r.isSub) {
+    rows.push("・サブスク割引（" + r.subPct + "%OFF）：-" + yen(r.subDiscount));
+    rows.push("毎月の金額（税込）：" + yen(r.monthly) + star);
+    if (r.campaign) {
+      rows.push("・" + r.campaignLabel + "（" + r.campaignPct + "%OFF・初月のみ）：-" + yen(r.campaign));
+      rows.push("初月の金額（税込）：" + yen(r.firstMonth) + star);
+    }
+    rows.push("※原則、最低3か月以上のご利用です");
+  } else {
+    if (r.campaign) rows.push("・" + r.campaignLabel + "（" + r.campaignPct + "%OFF）：-" + yen(r.campaign));
+    rows.push("合計（税込）：" + yen(r.total) + star);
+  }
   return rows.join("\n");
 }
 // ==LOGIC-END==
@@ -450,7 +525,7 @@ function renderHero() {
   el.onerror = () => { hero.classList.remove("has-media"); el.remove(); };
   media.appendChild(el);
 }
-const state = { figs: {}, rush: "none", bg: "simple", extras: {}, live2d: [], discount: true, campaign: true };
+const state = { figs: {}, items: {}, rush: "none", bg: "simple", extras: {}, live2d: [], discount: true, campaign: true, sub: false };
 
 /* ---------- キャンペーン（期限つき。過ぎたら自動で消える） ---------- */
 const CAMP = (function () {
@@ -493,19 +568,44 @@ function cchip(attr, id, label, sub) {
   return '<div class="cwrap" ' + attr + '="' + id + '"><button type="button" class="cchip" aria-pressed="false"><span>' + label +
     (sub ? "<small>" + sub + "</small>" : "") + '</span></button><button type="button" class="cnt" hidden></button></div>';
 }
+function foldHead(title, sub) { return '<summary><span class="fold-t">' + title + (sub ? "<small>" + sub + "</small>" : "") + '</span><i class="fc" hidden></i></summary>'; }
 function renderFigs() {
-  $("#figBlocks").innerHTML = Object.entries(PRICES.categories).map(([cid, c]) =>
-    '<div class="fig-cat"><h4>' + c.label + "<small>" + c.note + "</small></h4><div class=\"chips\">" +
+  $("#figBlocks").innerHTML = Object.entries(PRICES.categories).map(([cid, c], k) =>
+    '<details class="fold" data-fold="fig-' + cid + '"' + (k === 0 ? " open" : "") + ">" + foldHead(c.label, c.note) +
+    '<div class="fold-body"><div class="chips">' +
     c.sizes.map(z => cchip("data-fig", cid + ":" + z.id, z.label, baseLabel(z.price) + " ／ 1人")).join("") +
-    "</div></div>").join("");
+    "</div></div></details>").join("");
 }
+function renderMenus() {
+  $("#menuBlocks").innerHTML = Object.entries(PRICES.menus).map(([mid, m]) =>
+    '<details class="fold" data-fold="menu-' + mid + '">' + foldHead(m.label, m.note) + '<div class="fold-body"><div class="chips">' +
+    m.items.map(i => i.soon
+      ? '<div class="soon-chip"><button type="button" class="cchip" disabled aria-disabled="true"><span>' + i.label + (i.desc ? "<small>" + i.desc + "</small>" : "") + "</span></button></div>"
+      : cchip("data-item", i.id, i.label, [baseLabel(i.price, i.from), i.desc].filter(Boolean).join(" ／ "))).join("") +
+    "</div>" + (m.foot ? '<p class="note" style="margin:10px 0 0">' + m.foot + "</p>" : "") +
+    (m.link ? '<p class="menu-link"><a href="' + m.link.href + '">' + m.link.text + " →</a></p>" : "") +
+    "</div></details>").join("");
+}
+function cwrapStore(w) { return w.dataset.fig ? state.figs : w.dataset.item ? state.items : state.extras; }
+function cwrapId(w) { return w.dataset.fig || w.dataset.item || w.dataset.extra; }
 function syncCounts() {
   document.querySelectorAll(".cwrap").forEach(w => {
-    const n = (w.dataset.fig ? state.figs[w.dataset.fig] : state.extras[w.dataset.extra]) || 0;
+    const n = cwrapStore(w)[cwrapId(w)] || 0;
     const bd = w.querySelector(".cnt");
     bd.hidden = n === 0; bd.textContent = n;
     bd.setAttribute("aria-label", "現在" + n + "。押すと1つ減らします");
     const c = w.querySelector(".cchip"); c.classList.toggle("on", n > 0); c.setAttribute("aria-pressed", n > 0);
+  });
+}
+// 閉じているカテゴリにも、選んだ数が分かるように丸を出す
+function syncFolds() {
+  const sum = o => Object.values(o).reduce((a, b) => a + b, 0);
+  const c = { l2d: state.live2d.length, sub: state.sub ? 1 : 0, rush: state.rush !== "none" ? 1 : 0, bg: state.bg !== "simple" ? 1 : 0, extras: sum(state.extras) };
+  Object.keys(PRICES.categories).forEach(cid => { c["fig-" + cid] = Object.entries(state.figs).filter(([k]) => k.indexOf(cid + ":") === 0).reduce((a, [, v]) => a + v, 0); });
+  Object.entries(PRICES.menus).forEach(([mid, m]) => { c["menu-" + mid] = m.items.reduce((a, i) => a + (state.items[i.id] || 0), 0); });
+  document.querySelectorAll("details[data-fold]").forEach(d => {
+    const n = c[d.dataset.fold] || 0, f = d.querySelector(".fc");
+    f.hidden = n === 0; f.textContent = ["sub", "rush", "bg"].indexOf(d.dataset.fold) >= 0 ? "✓" : n;
   });
 }
 function renderOptions() {
@@ -516,7 +616,7 @@ function renderOptions() {
 }
 function renderLive2D() {
   const on = PRICES.live2d.enabled;
-  $("#l2dBlock").querySelector("h4 small").hidden = !on;
+  $("#l2dBlock").querySelector(".fold-t small").hidden = !on;
   $("#l2dChips").hidden = !on;
   $("#l2dSoon").hidden = on;
   $("#l2dChips").innerHTML = PRICES.live2d.items.map(i => chip("checkbox", "l2d", i.id, i.label, [baseLabel(i.price, i.from), i.desc].filter(Boolean).join(" ／ "), false)).join("");
@@ -530,23 +630,33 @@ function update() {
     $("#campNote").textContent = campaignBlocked() ? "Live2Dの先着特典とは同時に使えません。先着特典のチェックを外すと選べます。" : "";
   }
   $("#discBox").hidden = state.live2d.length === 0;
+  syncFolds();
   const r = calculate({ ...state, campaignRate: campaignOn() ? CAMP.rate : 0, campaignLabel: CAMP ? CAMP.name : "" });
   lastResult = r;
   const list = $("#lines");
   if (!r.lines.length) {
     list.innerHTML = '<li class="empty">メニューを選ぶと、ここに内訳が出ます</li>';
     $("#total").textContent = "—"; $("#mTotal").textContent = "—";
+    $("#totalLabel").textContent = "合計（税込）"; $("#mLabel").textContent = "合計（税込）"; $("#firstRow").hidden = true;
     $("#note").textContent = "";
     $("#estimateField").value = "";
     return;
   }
-  let html = r.lines.map(l => "<li><span>" + l.label + "</span><span>" + yen((l.price)) + (l.from ? "〜" : "") + "</span></li>").join("");
-  if (r.discount) html += '<li class="minus"><span>先着特典</span><span>-' + yen((r.discount)) + "</span></li>";
-  if (r.campaign) html += '<li class="minus"><span>' + esc(r.campaignLabel) + "（" + r.campaignPct + "%OFF）</span><span>-" + yen((r.campaign)) + "</span></li>";
+  const row = (label, amount, cls) => '<li class="' + (cls || "") + '"><span>' + label + "</span><span>" + amount + "</span></li>";
+  let html = r.lines.map(l => row(l.label, yen(l.price) + (l.from ? "〜" : ""))).join("");
+  r.perks.forEach(p => { html += row(p.label, "-" + yen(p.amount), "minus"); });
+  if (r.discount) html += row("先着特典", "-" + yen(r.discount), "minus");
+  if (r.isSub) html += row("サブスク割引（" + r.subPct + "%OFF）", "-" + yen(r.subDiscount), "minus");
+  if (r.campaign) html += row(esc(r.campaignLabel) + "（" + r.campaignPct + "%OFF" + (r.isSub ? "・初月のみ" : "") + "）", "-" + yen(r.campaign), "minus");
   list.innerHTML = html;
-  const total = yen((r.total)) + (r.hasFrom ? "〜" : "");
+  const star = r.hasFrom ? "〜" : "";
+  const total = yen(r.total) + star;
   $("#total").textContent = total; $("#mTotal").textContent = total;
-  $("#note").textContent = (r.hasFrom ? "「〜」付きの項目は最低金額です。" : "") + "あくまで概算です。正式なお見積もりは、内容を確認してからご案内します。";
+  const label = r.isSub ? "毎月（税込）" : "合計（税込）";
+  $("#totalLabel").textContent = label; $("#mLabel").textContent = label;
+  $("#firstRow").hidden = !(r.isSub && r.campaign);
+  $("#firstTotal").textContent = yen(r.firstMonth) + star;
+  $("#note").textContent = (r.hasFrom ? "「〜」付きの項目は最低金額です。" : "") + (r.isSub ? "サブスクは、原則最低3か月以上のご利用です。" : "") + "あくまで概算です。正式なお見積もりは、内容を確認してからご案内します。";
   $("#estimateField").value = estimateText(r);
 }
 
@@ -557,18 +667,20 @@ $("#estimator").addEventListener("change", e => {
   else if (t.name === "l2d") state.live2d = [...document.querySelectorAll("input[name=l2d]:checked")].map(i => i.value);
   else if (t.name === "disc") state.discount = t.checked;
   else if (t.name === "camp") state.campaign = t.checked;
+  else if (t.name === "sub") state.sub = t.checked;
   update();
 });
 $("#estimator").addEventListener("click", e => {
   if (e.target.closest("#clearBtn")) {
-    state.figs = {}; state.extras = {}; state.live2d = []; state.rush = "none"; state.bg = "simple";
+    state.figs = {}; state.items = {}; state.extras = {}; state.live2d = []; state.rush = "none"; state.bg = "simple"; state.sub = false;
+    $("#subCheck").checked = false;
     renderOptions(); renderLive2D(); syncCounts(); update();
     return;
   }
   const w = e.target.closest(".cwrap");
   if (!w) return;
-  const store = w.dataset.fig ? state.figs : state.extras;
-  const id = w.dataset.fig || w.dataset.extra;
+  const store = cwrapStore(w);
+  const id = cwrapId(w);
   const dec = !!e.target.closest(".cnt");
   const ex = w.dataset.extra ? PRICES.extras.find(x => x.id === id) : null;
   store[id] = Math.max(0, Math.min((ex && ex.max) || 20, (store[id] || 0) + (dec ? -1 : 1)));
@@ -628,7 +740,7 @@ $("#contactForm").addEventListener("submit", async e => {
   }
 });
 
-renderHero(); renderFigs(); renderOptions(); renderLive2D(); renderCampaign(); syncCounts(); update();
+renderHero(); renderFigs(); renderMenus(); renderOptions(); renderLive2D(); renderCampaign(); syncCounts(); update();
 </script>
 </body>
 </html>

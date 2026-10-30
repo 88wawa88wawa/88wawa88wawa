@@ -37,13 +37,20 @@ const CONFIG = {
 // トップには上から4件だけが出て、全部は作品ページに出ます。
 // title：題名 ／ tag：種類（等身・ミニキャラ・Live2D・量産依頼など。作品ページの絞り込みに出ます）
 // src：画像のパス（例 "images/work01.png"）／ desc：ひとこと（省略できます。拡大表示に出ます）
+// more：2枚目以降の画像（差分など。省略できます）。例 more: ["images/work01_b.png", "images/work01_c.png"]
+//       入れると、拡大表示に丸い矢印ボタンと「1 / 3」が出ます。一覧の画像には「1/3」の印が付きます。
+// 動画（アニメ）：src や more に、動画のパスをそのまま書けます（mp4 がおすすめ。3〜5MBくらいまで）。例 src: "videos/anim01.mp4"
+//       一覧には動画の最初の1コマと▶が出て、拡大表示で再生されます。一覧の絵を別にしたいときは poster: "images/anim01.png" を足します。
 const WORKS = [
-  { title: "作品タイトル 01", tag: "等身",     src: "", desc: "" },
+  { title: "作品タイトル 01", tag: "等身",     src: "", more: [], desc: "" },
   { title: "作品タイトル 02", tag: "ミニキャラ", src: "", desc: "" },
   { title: "作品タイトル 03", tag: "等身",     src: "", desc: "" },
   { title: "作品タイトル 04", tag: "量産依頼",  src: "", desc: "" },
   { title: "作品タイトル 05", tag: "Live2D",   src: "", desc: "" },
-  { title: "作品タイトル 06", tag: "等身",     src: "", desc: "" }
+  { title: "作品タイトル 06", tag: "等身",     src: "", desc: "" },
+  { title: "アニメーション サンプル", tag: "アニメーション", src: "", desc: "" },
+  // 見積もりの「ドット絵」から、tag が「その他」の作品にリンクしています。マイクラスキンの作品には、tag を「その他」にしてください
+  { title: "マイクラスキン サンプル", tag: "その他", src: "", desc: "" }
 ];
 
 // 量産依頼。トップの「量産依頼」に、カードとして並びます。
@@ -94,7 +101,7 @@ const YOUTUBE = {
   enabled: true,
   title: "YouTubeはじめました！",
   text: "Live2Dの制作過程などを載せていきます。",
-  channelUrl: "",      // チャンネルのURL（空なら「準備中」）
+  channelUrl: "https://www.youtube.com/channel/UCpBtRCYPMuY3-yb1NtNg7wQ",      // チャンネルのURL（空なら「準備中」）
   videoId: "",         // 例 "dQw4w9WgXcQ"
   isShort: false
 };

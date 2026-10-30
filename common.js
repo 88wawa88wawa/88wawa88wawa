@@ -7,15 +7,22 @@ const BULK_LIST = typeof BULK !== "undefined" ? BULK : [];
 
 document.querySelectorAll("[data-sitename]").forEach(el => el.textContent = CONFIG.siteName);
 
+const isVid = p => /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(p || "");
 function thumbInner(it) {
-  return it.src ? '<img src="' + esc(it.src) + '" alt="' + esc(it.title) + '" loading="lazy">' : "COMING SOON";
+  if (!it.src) return "COMING SOON";
+  if (!isVid(it.src)) return '<img src="' + esc(it.src) + '" alt="' + esc(it.title) + '" loading="lazy">';
+  // 動画：poster があればその画像、なければ動画の最初の1コマを出す
+  return (it.poster
+    ? '<img src="' + esc(it.poster) + '" alt="' + esc(it.title) + '" loading="lazy">'
+    : '<video src="' + esc(it.src) + '#t=0.1" muted playsinline preload="metadata" tabindex="-1" aria-label="' + esc(it.title) + '"></video>') +
+    '<span class="play" aria-hidden="true">&#9654;</span>';
 }
 
 /* ---------- 作品 ---------- */
 function worksHTML(list) { // list: [{ w: 作品, i: WORKSの中での番号 }]
   return list.map(({ w, i }) =>
     '<button type="button" class="work clickable" data-lb="w:' + i + '" aria-label="' + esc(w.title) + 'を大きく見る">' +
-    '<span class="thumb">' + thumbInner(w) + '</span>' +
+    '<span class="thumb">' + thumbInner(w) + (w.src && w.more && w.more.length ? '<span class="multi">1/' + (w.more.length + 1) + "</span>" : "") + '</span>' +
     '<span class="meta"><span>' + esc(w.title) + '</span><span class="tag">' + esc(w.tag) + "</span></span></button>"
   ).join("");
 }
@@ -28,6 +35,9 @@ function worksHTML(list) { // list: [{ w: 作品, i: WORKSの中での番号 }]
   const getLimit = () => (mq && mq.matches && Number(grid.dataset.limitMobile)) || Number(grid.dataset.limit) || 0;
   const filters = $("#filters");
   let current = "すべて";
+  // works.html#tag=マイクラスキン のように、タグを指定して開けます
+  const hm = /^#tag=(.+)$/.exec(decodeURIComponent(location.hash || ""));
+  if (hm && WORKS.some(w => w.tag === hm[1])) current = hm[1];
   function draw() {
     let list = WORKS.map((w, i) => ({ w, i })).filter(x => current === "すべて" || x.w.tag === current);
     const limit = getLimit();
@@ -88,13 +98,37 @@ function worksHTML(list) { // list: [{ w: 作品, i: WORKSの中での番号 }]
   const box = $("#lightbox");
   if (!box) return;
   const root = document.documentElement;
+  let imgs = [], pos = 0, ttl = "";
+  // 2枚目以降（more）があるときは、丸い矢印ボタンと「1/3」を出す
+  function show(title) {
+    if (title !== undefined) ttl = title;
+    const media = $("#lbMedia");
+    if (!imgs.length) { media.innerHTML = '<div class="lb-ph">COMING SOON</div>'; return; }
+    const multi = imgs.length > 1;
+    const cur = imgs[pos];
+    media.innerHTML = '<div class="lb-stage">' + (isVid(cur)
+      ? '<video src="' + esc(cur) + '" controls playsinline loop controlslist="nodownload noplaybackrate" disablepictureinpicture preload="metadata"></video>'
+      : '<img src="' + esc(cur) + '" alt="' + esc(ttl) + '">') +
+      (multi ? '<button type="button" class="lb-arrow prev" data-step="-1" aria-label="前の画像">&#8249;</button>' +
+               '<button type="button" class="lb-arrow next" data-step="1" aria-label="次の画像">&#8250;</button>' +
+               '<span class="lb-count">' + (pos + 1) + " / " + imgs.length + "</span>" : "") + "</div>";
+  }
+  function step(d) { if (imgs.length < 2) return; pos = (pos + d + imgs.length) % imgs.length; show(); }
+  box.addEventListener("click", e => {
+    const a = e.target.closest("[data-step]");
+    if (a) { e.stopImmediatePropagation(); step(Number(a.dataset.step)); }
+  });
+  box.addEventListener("keydown", e => {
+    if (e.key === "ArrowLeft") step(-1); else if (e.key === "ArrowRight") step(1);
+  });
   document.addEventListener("click", e => {
     const t = e.target.closest("[data-lb]");
     if (!t) return;
     const [kind, idx] = t.dataset.lb.split(":");
     const it = (kind === "b" ? BULK_LIST : WORKS)[Number(idx)];
     if (!it) return;
-    $("#lbMedia").innerHTML = it.src ? '<img src="' + esc(it.src) + '" alt="' + esc(it.title) + '">' : '<div class="lb-ph">COMING SOON</div>';
+    imgs = it.src ? [it.src].concat(Array.isArray(it.more) ? it.more.filter(Boolean) : []) : [];
+    pos = 0; show(it.title);
     $("#lbTitle").textContent = it.title;
     const tag = kind === "b" ? "量産依頼" : it.tag;
     const tg = $("#lbTag"); tg.textContent = tag || ""; tg.hidden = !tag;
@@ -108,7 +142,7 @@ function worksHTML(list) { // list: [{ w: 作品, i: WORKSの中での番号 }]
     const r = box.getBoundingClientRect();
     if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) box.close();
   });
-  box.addEventListener("close", () => root.classList.remove("no-scroll"));
+  box.addEventListener("close", () => { root.classList.remove("no-scroll"); $("#lbMedia").innerHTML = ""; });
 })();
 
 /* ---------- 連絡先（プロフィール風のカード） ---------- */
