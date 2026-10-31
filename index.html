@@ -32,7 +32,7 @@
     <div class="wrap">
       <span class="badge">COMMISSION OPEN</span>
       <h1>イラスト・Live2Dの<br><mark>ご依頼</mark>はこちら</h1>
-      <p>オリジナルキャラクターの立ち絵から、Live2Dのご相談まで。料金は下のページで、その場で概算を出せます。</p>
+      <p>オリジナルキャラクターの立ち絵、<br>かわいいミニキャラはお任せください！<br>料金の概算を出してそのままお問い合わせいただけます♪</p>
       <div class="hero-camp" id="heroCamp" hidden><a class="camp-pill" href="#price" id="heroCampLink"></a></div>
       <div class="cta">
         <a class="btn pink" href="#price">料金をシミュレーション</a>
@@ -661,7 +661,7 @@ function update() {
   $("#totalLabel").textContent = label; $("#mLabel").textContent = label;
   $("#firstRow").hidden = !(r.isSub && r.campaign);
   $("#firstTotal").textContent = yen(r.firstMonth) + star;
-  $("#note").textContent = (r.hasFrom ? "「〜」付きの項目は最低金額です。" : "") + (r.isSub ? "サブスクは、原則最低3か月以上のご利用です。" : "") + "あくまで概算です。正式なお見積もりは、内容を確認してからご案内します。";
+  $("#note").textContent = (r.hasFrom ? "「〜」付きの項目は最低金額です。" : "") + "あくまで概算です。正式なお見積もりは、内容を確認してからご案内します。";
   $("#estimateField").value = estimateText(r);
 }
 

@@ -254,12 +254,12 @@ const YOUTUBE = {
 // ★ いまの表示は仮です。実際の状況に合わせて書き換えてください。
 const SCHEDULE = {
   enabled: true,
-  updated: "2026-10-29",     // 最後に更新した日
+  updated: "2026-10-31",     // 最後に更新した日
   months: [
     { month: "2026-11", status: "〇", memo: "" },
-    { month: "2026-12", status: "〇", memo: "" },
-    { month: "2027-01", status: "〇", memo: "" },
-    { month: "2027-02", status: "〇", memo: "" },
-    { month: "2027-03", status: "〇", memo: "" }
+    { month: "2026-12", status: "◎", memo: "" },
+    { month: "2027-01", status: "◎", memo: "" },
+    { month: "2027-02", status: "◎", memo: "" },
+    { month: "2027-03", status: "◎", memo: "" }
   ]
 };
