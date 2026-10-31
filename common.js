@@ -98,7 +98,7 @@ function worksHTML(list) { // list: [{ w: 作品, i: WORKSの中での番号 }]
   const box = $("#lightbox");
   if (!box) return;
   const root = document.documentElement;
-  let imgs = [], pos = 0, ttl = "";
+  let imgs = [], pos = 0, ttl = "", loopOn = true;
   // 2枚目以降（more）があるときは、丸い矢印ボタンと「1/3」を出す
   function show(title) {
     if (title !== undefined) ttl = title;
@@ -107,7 +107,7 @@ function worksHTML(list) { // list: [{ w: 作品, i: WORKSの中での番号 }]
     const multi = imgs.length > 1;
     const cur = imgs[pos];
     media.innerHTML = '<div class="lb-stage">' + (isVid(cur)
-      ? '<video src="' + esc(cur) + '" controls playsinline loop controlslist="nodownload noplaybackrate" disablepictureinpicture preload="metadata"></video>'
+      ? '<video src="' + esc(cur) + '" controls playsinline' + (loopOn ? ' loop' : '') + ' controlslist="nodownload noplaybackrate" disablepictureinpicture preload="metadata"></video>'
       : '<img src="' + esc(cur) + '" alt="' + esc(ttl) + '">') +
       (multi ? '<button type="button" class="lb-arrow prev" data-step="-1" aria-label="前の画像">&#8249;</button>' +
                '<button type="button" class="lb-arrow next" data-step="1" aria-label="次の画像">&#8250;</button>' +
@@ -128,6 +128,7 @@ function worksHTML(list) { // list: [{ w: 作品, i: WORKSの中での番号 }]
     const it = (kind === "b" ? BULK_LIST : WORKS)[Number(idx)];
     if (!it) return;
     imgs = it.src ? [it.src].concat(Array.isArray(it.more) ? it.more.filter(Boolean) : []) : [];
+    loopOn = it.loop !== false;   // loop: false を書くと、ループしません
     pos = 0; show(it.title);
     $("#lbTitle").textContent = it.title;
     const tag = kind === "b" ? "量産依頼" : it.tag;
@@ -297,4 +298,15 @@ async function copyText(text) {
     '<ul class="sch-legend">' + legend + "</ul>" + (memos ? '<ul class="sch-memo">' + memos + "</ul>" : "");
   const u = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(S.updated || "");
   if (u) $("#schedUpdated").textContent = "（" + Number(u[2]) + "月" + Number(u[3]) + "日 更新）";
+})();
+
+/* ---------- Skeb（ヒアリングなしで頼みたい方向けの案内。お問い合わせの上） ---------- */
+(function initSkeb() {
+  const el = $("#skebCard");
+  const u = (CONFIG.contact || {}).skebUrl;
+  if (!el || !isUrl(u)) return;
+  el.innerHTML = '<p class="skeb-t">ヒアリングなしでご依頼したい方へ</p>' +
+    '<p class="skeb-d">Skebでも、ご依頼をお受けしています。</p>' +
+    '<a class="btn white" href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">Skebでご依頼する</a>';
+  el.hidden = false;
 })();

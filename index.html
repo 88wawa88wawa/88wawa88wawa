@@ -177,6 +177,7 @@
       <span class="eyebrow">CONTACT</span>
       <h2>お問い合わせ</h2>
       <p class="lead">ご依頼・ご相談は、こちらのフォーム、メールアドレス、X（旧Twitter）まで。</p>
+      <div class="card skeb" id="skebCard" hidden></div>
       <div class="tabs" role="tablist" aria-label="ご連絡の方法">
         <button type="button" role="tab" class="tab" id="tabForm" aria-selected="true" aria-controls="panelForm">フォームで送る</button>
         <button type="button" role="tab" class="tab" id="tabDm" aria-selected="false" aria-controls="panelDm" tabindex="-1">Xやメールで相談する</button>
@@ -382,6 +383,9 @@ const PRICES = {
   ],
   // アニメーション・ドット絵など。soon:true は「準備中」の表示だけ。link を入れると、下にリンクが出ます
   menus: {
+    simple: { label: "簡易イラスト", note: "ご予算に合わせて", items: [
+      { id: "simple", label: "簡易イラスト", price: 500, from: true, desc: "要相談" }
+    ], foot: "ご予算内で可能な範囲の描写をいたします！最低ライン…ラフな線＋単色塗り" },
     animation: { label: "アニメーション", note: "", items: [
       { id: "motion", label: "モーションアニメ", soon: true, desc: "今後Live2Dで制作予定（準備中）" },
       { id: "hand",   label: "手書きアニメ",     price: 30000, from: true }
@@ -400,6 +404,7 @@ const PRICES = {
     { id: "logo",    label: "ネームロゴ制作",   price: 1500, type: "check" },
     { id: "promo",   label: "立ち絵公開画像",   price: 2500, type: "check" },
     { id: "props",   label: "小物追加",         price: 500,  from: true, type: "count", unit: "点" },
+    { id: "threeview", label: "三面図",         price: 20000, type: "check" },
     { id: "chara",   label: "キャラデザ",       price: 4000, type: "check" },
     { id: "outfit",  label: "衣装デザイン",     price: 2000, type: "check" },
     { id: "expr",    label: "表情差分",         price: 500,  type: "check" },

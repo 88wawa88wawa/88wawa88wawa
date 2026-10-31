@@ -455,3 +455,13 @@ img,video{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-
 .lb-stage video{width:100%}
 .lb-stage .lb-arrow{top:42%}
 .lb-stage:has(video) .lb-count{top:10px;bottom:auto}
+
+/* desc の中の \n で改行できるように */
+.lb-desc,.bcard-desc{white-space:pre-line}
+
+/* ---- Skeb案内 ---- */
+.skeb{margin:0 0 18px;background:var(--yellow-soft)}
+.skeb[hidden]{display:none}
+.skeb-t{margin:0;font-weight:900}
+.skeb-d{margin:4px 0 0;color:#6A6A74}
+.skeb .btn{margin-top:12px;width:auto}
