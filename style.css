@@ -465,3 +465,18 @@ img,video{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-
 .skeb-t{margin:0;font-weight:900}
 .skeb-d{margin:4px 0 0;color:#6A6A74}
 .skeb .btn{margin-top:12px;width:auto}
+
+/* ---- 一覧の画像・動画：切り取らず、枠の中に全体を収める（上下などに、すき間ができます） ---- */
+.thumb img,.thumb video{object-fit:contain;object-position:center}
+/* 画像の元の大きさに、枠が引っぱられないようにする（枠の大きさは、いつも同じ） */
+.thumb{overflow:hidden}
+.thumb img,.thumb video{position:absolute;inset:0;width:100%;height:100%}
+
+/* ---- 狭いスマホ（iPhone mini など）：ロゴを折り返さず、1行に収める ---- */
+.logo{white-space:nowrap}
+@media(max-width:400px){
+  nav{padding-left:16px;padding-right:12px;gap:6px}
+  .logo{font-size:.88rem;letter-spacing:0}
+  nav ul{gap:0}
+  nav ul a{padding:.35rem .5rem;font-size:.8rem}
+}
